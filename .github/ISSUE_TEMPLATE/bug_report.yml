@@ -1,0 +1,119 @@
+name: 🐛 Bug Report
+description: Report a bug or unexpected behavior in PortPulse
+title: "[Bug]: "
+labels: ["bug", "triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 🐛 Bug Report
+        Thanks for taking the time to report a bug! Please fill out the sections below to help us reproduce and fix the issue.
+
+  - type: input
+    id: version
+    attributes:
+      label: PortPulse Version
+      description: "Run `portpulse --version` to get this"
+      placeholder: "e.g., 0.1.0"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: mode
+    attributes:
+      label: Running Mode
+      description: How are you running PortPulse?
+      options:
+        - eBPF mode (sudo portpulse live)
+        - Fallback mode (portpulse live --no-ebpf)
+        - CLI command (trace/explain/export/status)
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: A clear and concise description of the bug
+      placeholder: "When I run `portpulse live`, the connections table shows..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: Minimal steps to reproduce the behavior
+      placeholder: |
+        1. Run `portpulse live --no-ebpf`
+        2. Press '2' to switch to Connections panel
+        3. Press 's' to sort
+        4. Observe the crash
+      value: |
+        1. 
+        2. 
+        3. 
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What you expected to happen
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      description: What actually happened (include error messages, stack traces, screenshots)
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: System information
+      placeholder: |
+        - OS: Ubuntu 24.04
+        - Kernel: 6.5.0-generic
+        - Rust: 1.75.0
+        - Terminal: GNOME Terminal 3.50
+        - Root: yes/no
+      value: |
+        - OS: 
+        - Kernel: 
+        - Rust: 
+        - Terminal: 
+        - Root: yes/no
+    validations:
+      required: true
+
+  - type: textarea
+    id: status-output
+    attributes:
+      label: PortPulse Status Output
+      description: "Paste the output of `portpulse status`"
+      render: text
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: "Run with `RUST_LOG=debug portpulse ...` and paste relevant logs"
+      render: text
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Pre-submission Checklist
+      options:
+        - label: I have searched existing issues and this is not a duplicate
+          required: true
+        - label: I have included the output of `portpulse status`
+        - label: I have included relevant logs or error messages

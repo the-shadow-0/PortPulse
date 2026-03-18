@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Questions & Discussions
+    url: https://github.com/the-shadow-0/PortPulse/discussions
+    about: Ask questions, share ideas, and discuss PortPulse with the community
+  - name: 🔐 Security Vulnerability (Private)
+    url: https://github.com/the-shadow-0/PortPulse/security/advisories/new
+    about: Report high-severity security vulnerabilities privately
+  - name: 📖 Documentation
+    url: https://github.com/the-shadow-0/PortPulse/tree/main/docs
+    about: Check the documentation before opening an issue

@@ -1,0 +1,104 @@
+name: 💡 Feature Request
+description: Suggest a new feature or enhancement for PortPulse
+title: "[Feature]: "
+labels: ["enhancement", "triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 💡 Feature Request
+        Have an idea to make PortPulse better? We'd love to hear it!
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Feature Area
+      description: Which part of PortPulse does this relate to?
+      options:
+        - TUI / Dashboard
+        - CLI Commands
+        - Risk Scoring Engine
+        - eBPF Probes
+        - Data Export
+        - Policy Engine
+        - Process Tree
+        - Connection Graph
+        - DNS Capture
+        - Documentation
+        - Performance
+        - Packaging / Distribution
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Importance
+      description: How important is this feature to you?
+      options:
+        - Nice to have
+        - Important — would improve my workflow
+        - Critical — blocking my use case
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Statement
+      description: What problem does this feature solve? Why do you need it?
+      placeholder: "I'm always frustrated when... / I currently have to..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: How do you envision this working?
+      placeholder: |
+        A new command `portpulse foo --bar` that does...
+        
+        Or a new TUI panel that shows...
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Any alternative solutions or workarounds you've considered?
+
+  - type: textarea
+    id: mockup
+    attributes:
+      label: Mockup / Examples
+      description: Any sketches, screenshots, CLI output examples, or references?
+      placeholder: |
+        ```
+        $ portpulse new-command --flag
+        Output would look like...
+        ```
+
+  - type: dropdown
+    id: contribute
+    attributes:
+      label: Would you be willing to contribute this?
+      options:
+        - "Yes — I'd like to implement this"
+        - "Yes — with some guidance"
+        - "No — but I'd love to see it built"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Pre-submission Checklist
+      options:
+        - label: I have searched existing issues and this is not a duplicate
+          required: true
+        - label: I have checked the roadmap in README.md
