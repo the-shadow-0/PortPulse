@@ -1,0 +1,26 @@
+[package]
+name = "portpulse"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "See every Linux process, port, connection, and DNS lookup live in one interactive map"
+
+[[bin]]
+name = "portpulse"
+path = "src/main.rs"
+
+[dependencies]
+portpulse-core = { workspace = true }
+portpulse-ebpf = { workspace = true }
+portpulse-tui = { workspace = true }
+clap = { workspace = true }
+tokio = { workspace = true }
+anyhow = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+chrono = { workspace = true }
+serde_json = { workspace = true }
+ratatui = { workspace = true }
+crossterm = { workspace = true }
+libc = "0.2"

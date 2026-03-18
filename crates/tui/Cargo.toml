@@ -1,0 +1,17 @@
+[package]
+name = "portpulse-tui"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "Terminal UI for PortPulse: real-time dashboard, connection graph, and monitoring views"
+
+[dependencies]
+portpulse-core = { workspace = true }
+ratatui = { workspace = true }
+crossterm = { workspace = true }
+tokio = { workspace = true }
+anyhow = { workspace = true }
+tracing = { workspace = true }
+chrono = { workspace = true }
+unicode-width = "0.2"

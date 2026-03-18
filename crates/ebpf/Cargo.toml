@@ -1,0 +1,18 @@
+[package]
+name = "portpulse-ebpf"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "eBPF probe loader and event reader for PortPulse"
+
+[dependencies]
+portpulse-core = { workspace = true }
+tokio = { workspace = true }
+anyhow = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }
+serde = { workspace = true }
+chrono = { workspace = true }
+uuid = { workspace = true }
+libc = "0.2"
