@@ -12,7 +12,7 @@ Thank you for your interest in contributing to PortPulse! 🎉
 ### Building from Source
 ```bash
 git clone https://github.com/the-shadow-0/PortPulse.git
-cd portpulse
+cd PortPulse
 cargo build --workspace
 cargo test --workspace
 ```
