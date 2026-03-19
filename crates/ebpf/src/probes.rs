@@ -32,7 +32,7 @@ use serde::{Deserialize, Serialize};
 /// - No kernel modifications: all probes are read-only observers
 /// - Automatic cleanup on program exit (eBPF programs are reference-counted)
 /// - Perf buffer is used for kernel→userspace event delivery (bounded, non-blocking)
-
+///
 /// Definition of a probe to attach
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ProbeDefinition {

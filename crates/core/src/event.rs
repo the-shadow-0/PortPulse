@@ -98,6 +98,7 @@ impl EventBus {
     }
 
     /// Publish an event to all subscribers
+    #[allow(clippy::result_large_err)]
     pub fn publish(&self, event: Event) -> Result<(), broadcast::error::SendError<Event>> {
         self.sender.send(event)?;
         Ok(())

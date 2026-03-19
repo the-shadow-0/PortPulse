@@ -93,6 +93,7 @@ pub fn render(frame: &mut Frame, app: &App, area: Rect) {
 }
 
 /// Recursively render a tree node
+#[allow(clippy::too_many_arguments)]
 fn render_tree_node<'a>(
     lines: &mut Vec<Line<'a>>,
     pid: u32,
