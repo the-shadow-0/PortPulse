@@ -20,23 +20,44 @@ impl RiskClassifier {
     pub fn new() -> Self {
         Self {
             suspicious_tlds: vec![
-                ".tk".into(), ".ml".into(), ".ga".into(), ".cf".into(),
-                ".gq".into(), ".xyz".into(), ".top".into(), ".buzz".into(),
-                ".club".into(), ".work".into(), ".icu".into(),
+                ".tk".into(),
+                ".ml".into(),
+                ".ga".into(),
+                ".cf".into(),
+                ".gq".into(),
+                ".xyz".into(),
+                ".top".into(),
+                ".buzz".into(),
+                ".club".into(),
+                ".work".into(),
+                ".icu".into(),
             ],
             suspicious_ports: vec![
-                4444, 5555, 6666, 6667, 6697, 8080, 8443, 9001, 9050, 9150,
-                31337, 12345, 54321, 1337,
+                4444, 5555, 6666, 6667, 6697, 8080, 8443, 9001, 9050, 9150, 31337, 12345, 54321,
+                1337,
             ],
             safe_domains: vec![
-                "google.com".into(), "amazonaws.com".into(), "github.com".into(),
-                "microsoft.com".into(), "apple.com".into(), "cloudflare.com".into(),
-                "fastly.net".into(), "akamai.net".into(), "debian.org".into(),
-                "ubuntu.com".into(), "arch.org".into(), "kernel.org".into(),
+                "google.com".into(),
+                "amazonaws.com".into(),
+                "github.com".into(),
+                "microsoft.com".into(),
+                "apple.com".into(),
+                "cloudflare.com".into(),
+                "fastly.net".into(),
+                "akamai.net".into(),
+                "debian.org".into(),
+                "ubuntu.com".into(),
+                "arch.org".into(),
+                "kernel.org".into(),
             ],
             suspicious_patterns: vec![
-                "crypto".into(), "miner".into(), "c2".into(), "botnet".into(),
-                "malware".into(), "phish".into(), "darkweb".into(),
+                "crypto".into(),
+                "miner".into(),
+                "c2".into(),
+                "botnet".into(),
+                "malware".into(),
+                "phish".into(),
+                "darkweb".into(),
             ],
         }
     }
@@ -95,7 +116,8 @@ impl RiskClassifier {
 
             // Entropy check — many unique characters suggests generated domain
             if hostname_lower.len() > 10 {
-                let unique_chars: std::collections::HashSet<char> = hostname_lower.chars().collect();
+                let unique_chars: std::collections::HashSet<char> =
+                    hostname_lower.chars().collect();
                 let entropy_ratio = unique_chars.len() as f64 / hostname_lower.len() as f64;
                 if entropy_ratio > 0.8 {
                     score += 0.2;
@@ -258,7 +280,11 @@ mod tests {
         let classifier = RiskClassifier::new();
         let conn = make_connection(443, Some("google.com"), "curl");
         let risk = classifier.score_connection(&conn);
-        assert!(risk.score < 0.3, "google.com:443 should be low risk, got {}", risk.score);
+        assert!(
+            risk.score < 0.3,
+            "google.com:443 should be low risk, got {}",
+            risk.score
+        );
     }
 
     #[test]
@@ -266,7 +292,11 @@ mod tests {
         let classifier = RiskClassifier::new();
         let conn = make_connection(4444, None, "unknown_binary");
         let risk = classifier.score_connection(&conn);
-        assert!(risk.score > 0.3, "port 4444 should be suspicious, got {}", risk.score);
+        assert!(
+            risk.score > 0.3,
+            "port 4444 should be suspicious, got {}",
+            risk.score
+        );
     }
 
     #[test]
@@ -274,7 +304,11 @@ mod tests {
         let classifier = RiskClassifier::new();
         let conn = make_connection(80, Some("evil.tk"), "curl");
         let risk = classifier.score_connection(&conn);
-        assert!(risk.score > 0.2, ".tk TLD should increase risk, got {}", risk.score);
+        assert!(
+            risk.score > 0.2,
+            ".tk TLD should increase risk, got {}",
+            risk.score
+        );
     }
 
     #[test]
@@ -282,7 +316,8 @@ mod tests {
         let classifier = RiskClassifier::new();
         let query = DnsQuery {
             id: Uuid::new_v4(),
-            domain: "aVeryLongSubdomainThatMightBeUsedForDataExfiltrationViaDnsTunneling.evil.tk".to_string(),
+            domain: "aVeryLongSubdomainThatMightBeUsedForDataExfiltrationViaDnsTunneling.evil.tk"
+                .to_string(),
             query_type: DnsQueryType::A,
             resolved_ips: vec![],
             process: None,
@@ -291,6 +326,10 @@ mod tests {
             risk: RiskScore::safe(),
         };
         let risk = classifier.score_dns(&query);
-        assert!(risk.score > 0.5, "DNS tunneling pattern should be high risk, got {}", risk.score);
+        assert!(
+            risk.score > 0.5,
+            "DNS tunneling pattern should be high risk, got {}",
+            risk.score
+        );
     }
 }

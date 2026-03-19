@@ -1,5 +1,5 @@
-use crate::models::*;
 use crate::event::Event;
+use crate::models::*;
 use chrono::Utc;
 use std::collections::HashMap;
 use std::net::IpAddr;
@@ -166,7 +166,8 @@ impl Aggregator {
                 };
 
                 let conn = self.connections.entry(key).or_insert_with(|| {
-                    let process = self.process_cache
+                    let process = self
+                        .process_cache
                         .get(pid)
                         .cloned()
                         .unwrap_or_else(|| ProcessInfo::unknown(*pid));
@@ -264,10 +265,7 @@ impl Aggregator {
                 self.add_timeline_event(timeline_event.clone());
                 self.dns_queries.push(dns.clone());
 
-                vec![
-                    Event::DnsUpdate(dns),
-                    Event::TimelineEvent(timeline_event),
-                ]
+                vec![Event::DnsUpdate(dns), Event::TimelineEvent(timeline_event)]
             }
 
             Event::DnsResponseEvent {
@@ -276,11 +274,15 @@ impl Aggregator {
                 response_time_ms,
                 timestamp: _,
             } => {
-                self.dns_cache
-                    .insert(domain.clone(), resolved_ips.clone());
+                self.dns_cache.insert(domain.clone(), resolved_ips.clone());
 
                 // Update the latest matching DNS query
-                if let Some(query) = self.dns_queries.iter_mut().rev().find(|q| q.domain == *domain) {
+                if let Some(query) = self
+                    .dns_queries
+                    .iter_mut()
+                    .rev()
+                    .find(|q| q.domain == *domain)
+                {
                     query.resolved_ips = resolved_ips.clone();
                     query.response_time_ms = Some(*response_time_ms);
                     return vec![Event::DnsUpdate(query.clone())];
@@ -342,9 +344,8 @@ impl Aggregator {
     /// Clear stale connections older than the given duration
     pub fn gc_stale(&mut self, max_age_secs: i64) {
         let now = Utc::now();
-        self.connections.retain(|_, conn| {
-            (now - conn.last_seen).num_seconds() < max_age_secs
-        });
+        self.connections
+            .retain(|_, conn| (now - conn.last_seen).num_seconds() < max_age_secs);
     }
 }
 

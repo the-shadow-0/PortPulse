@@ -28,10 +28,7 @@ pub async fn run() -> Result<()> {
 
     // Check if running as root
     let is_root = unsafe { libc::geteuid() } == 0;
-    println!(
-        "  Root:        {}",
-        if is_root { "✓ Yes" } else { "✗ No" }
-    );
+    println!("  Root:        {}", if is_root { "✓ Yes" } else { "✗ No" });
 
     // Probe definitions
     println!();
@@ -53,13 +50,14 @@ pub async fn run() -> Result<()> {
     // /proc/net files
     println!();
     println!("  📂 /proc/net Status:");
-    for file in &["/proc/net/tcp", "/proc/net/tcp6", "/proc/net/udp", "/proc/net/udp6"] {
+    for file in &[
+        "/proc/net/tcp",
+        "/proc/net/tcp6",
+        "/proc/net/udp",
+        "/proc/net/udp6",
+    ] {
         let available = std::path::Path::new(file).exists();
-        println!(
-            "    {} {}",
-            if available { "✓" } else { "✗" },
-            file
-        );
+        println!("    {} {}", if available { "✓" } else { "✗" }, file);
     }
 
     println!();

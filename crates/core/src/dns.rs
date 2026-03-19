@@ -102,9 +102,18 @@ mod tests {
     fn test_dns_cache_eviction() {
         let mut cache = DnsCache::new(2);
 
-        cache.insert("a.com".to_string(), vec![IpAddr::V4(Ipv4Addr::new(1, 1, 1, 1))]);
-        cache.insert("b.com".to_string(), vec![IpAddr::V4(Ipv4Addr::new(2, 2, 2, 2))]);
-        cache.insert("c.com".to_string(), vec![IpAddr::V4(Ipv4Addr::new(3, 3, 3, 3))]);
+        cache.insert(
+            "a.com".to_string(),
+            vec![IpAddr::V4(Ipv4Addr::new(1, 1, 1, 1))],
+        );
+        cache.insert(
+            "b.com".to_string(),
+            vec![IpAddr::V4(Ipv4Addr::new(2, 2, 2, 2))],
+        );
+        cache.insert(
+            "c.com".to_string(),
+            vec![IpAddr::V4(Ipv4Addr::new(3, 3, 3, 3))],
+        );
 
         assert_eq!(cache.len(), 2);
     }

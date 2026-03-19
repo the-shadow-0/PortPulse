@@ -42,18 +42,15 @@ pub async fn run(format: &str, what: &str, output: Option<&str>) -> Result<()> {
             portpulse_core::export::Exporter::connections_to_csv(writer, &connections)?;
         }
         ("dns", "json") => {
-            let queries: Vec<portpulse_core::DnsQuery> =
-                aggregator.dns_queries().to_vec();
+            let queries: Vec<portpulse_core::DnsQuery> = aggregator.dns_queries().to_vec();
             portpulse_core::export::Exporter::dns_to_json(writer, &queries)?;
         }
         ("dns", "csv") => {
-            let queries: Vec<portpulse_core::DnsQuery> =
-                aggregator.dns_queries().to_vec();
+            let queries: Vec<portpulse_core::DnsQuery> = aggregator.dns_queries().to_vec();
             portpulse_core::export::Exporter::dns_to_csv(writer, &queries)?;
         }
         ("timeline", "json") => {
-            let events: Vec<portpulse_core::NetworkEvent> =
-                aggregator.timeline().to_vec();
+            let events: Vec<portpulse_core::NetworkEvent> = aggregator.timeline().to_vec();
             portpulse_core::export::Exporter::timeline_to_json(writer, &events)?;
         }
         _ => {

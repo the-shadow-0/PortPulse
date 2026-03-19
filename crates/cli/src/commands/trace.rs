@@ -2,7 +2,6 @@ use anyhow::Result;
 use portpulse_core::process::ProcessScanner;
 use portpulse_ebpf::fallback::ProcNetScanner;
 
-
 /// Trace a specific process's network activity
 pub async fn run(pid: u32, children: bool, format: &str) -> Result<()> {
     println!("⚡ PortPulse — Tracing PID {}", pid);

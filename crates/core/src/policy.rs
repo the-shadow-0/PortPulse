@@ -201,10 +201,7 @@ impl PolicyEngine {
                     if domain_lower.contains(&blocked.to_lowercase()) {
                         violations.push(PolicyViolation {
                             rule_name: rule.name.clone(),
-                            description: format!(
-                                "DNS query for blocked domain '{}'",
-                                query.domain
-                            ),
+                            description: format!("DNS query for blocked domain '{}'", query.domain),
                             severity: RiskLevel::High,
                             suggested_action: PolicyAction::SuggestQuarantine {
                                 domain: query.domain.clone(),

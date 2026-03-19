@@ -4,9 +4,9 @@ use crossterm::{
     execute,
     terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen},
 };
-use portpulse_core::event::EventBus;
 use portpulse_core::aggregator::Aggregator;
 use portpulse_core::classifier::RiskClassifier;
+use portpulse_core::event::EventBus;
 use portpulse_ebpf::fallback::ProcNetScanner;
 use portpulse_ebpf::loader::EbpfLoader;
 use portpulse_ebpf::probes::default_probes;
@@ -50,8 +50,7 @@ pub async fn run(threshold: f64, refresh_ms: u64, no_ebpf: bool) -> Result<()> {
                 }
             }
         } else {
-            app.status_message =
-                "⚡ PortPulse active — /proc fallback (eBPF unavailable)".into();
+            app.status_message = "⚡ PortPulse active — /proc fallback (eBPF unavailable)".into();
         }
     } else {
         app.status_message = "⚡ PortPulse active — /proc polling mode".into();

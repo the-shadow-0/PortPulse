@@ -169,9 +169,9 @@ mod tests {
     fn test_event_bus_pub_sub() {
         let bus = EventBus::new(16);
         let mut rx = bus.subscribe();
-        
+
         bus.publish(Event::Tick).unwrap();
-        
+
         let event = rx.try_recv().unwrap();
         assert!(matches!(event, Event::Tick));
     }

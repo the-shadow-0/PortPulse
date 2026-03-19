@@ -152,7 +152,7 @@ impl EbpfLoader {
         //     info!("Attached probe: {} → {}", probe.name, probe.attach_point);
         //     self.attached.push(probe.name.clone());
         // }
-        */
+         */
 
         // Simulated attachment for now
         for probe in &self.probes {

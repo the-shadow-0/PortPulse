@@ -8,14 +8,9 @@
 [![Rust](https://img.shields.io/badge/Rust-1.75%2B-orange.svg)](https://www.rust-lang.org/)
 [![eBPF](https://img.shields.io/badge/eBPF-Powered-green.svg)](https://ebpf.io/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+[![GitHub Stars](https://img.shields.io/github/stars/the-shadow-0/PortPulse?style=social)](https://github.com/the-shadow-0/PortPulse)
 
 **🔍 What process is talking? 🌐 To which domain? 🚪 Through which port? ⚠️ With what risk?**
-
-<br>
-
-<img src="assets/screenshots/dashboard.png" alt="PortPulse Dashboard" width="800">
-
-*Real-time dashboard: connections, DNS queries, timeline, and suspicious activity — all in one view*
 
 <br>
 
@@ -24,6 +19,14 @@
 <img src="assets/demo.gif" alt="PortPulse Demo" width="800">
 
 *30-second demo: status check → port explanation → process tracing → live TUI dashboard*
+
+<br>
+
+### 📊 Dashboard Preview
+
+<img src="assets/screenshots/dashboard.png" alt="PortPulse Dashboard" width="800">
+
+*Real-time dashboard: connections, DNS queries, timeline, and suspicious activity — all in one view*
 
 </div>
 
@@ -44,6 +47,8 @@ Linux debugging is **fragmented**. You juggle between `ss`, `netstat`, `lsof`, D
 | No DNS visibility | Real-time DNS query capture |
 | No container awareness | Docker/Kubernetes container detection |
 
+> **💡 Think of PortPulse as `htop` for your network — but with risk intelligence and eBPF superpowers.**
+
 ---
 
 ## ⚡ Quickstart
@@ -51,10 +56,13 @@ Linux debugging is **fragmented**. You juggle between `ss`, `netstat`, `lsof`, D
 ```bash
 # Install from source
 git clone https://github.com/the-shadow-0/PortPulse.git
-cd portpulse && cargo install --path crates/cli
+cd PortPulse && cargo install --path crates/cli
 
 # Launch the dashboard (use sudo for eBPF probes)
 sudo portpulse live
+
+# Or without root (fallback mode)
+portpulse live --no-ebpf
 ```
 
 That's it. **Two commands** to full network visibility.
@@ -82,7 +90,7 @@ Every connection is scored from 0.0 (safe) to 1.0 (critical) using heuristics:
 A persistent alert bar at the top of the screen highlighting high-risk connections with blinking indicators.
 
 ### ⚡ Animated Connection Graph
-The WOW feature — processes and domains connected by live-updating edges:
+The **WOW feature** — processes and domains connected by live-updating edges:
 - **Blue** for normal connections
 - **Pulsing red** for suspicious activity
 - Port labels at edge midpoints
@@ -165,6 +173,22 @@ portpulse status                     # Check eBPF & system status
 
 ---
 
+## ⌨️ Keyboard Shortcuts
+
+| Key | Action |
+|-----|--------|
+| `1` — `5` | Switch panels (Dashboard, Connections, DNS, Processes, Graph) |
+| `Tab` | Cycle through panels |
+| `j` / `↓` | Move selection down |
+| `k` / `↑` | Move selection up |
+| `Enter` | Open detail view for selected connection |
+| `/` | Filter by process name, domain, or port |
+| `s` | Toggle sort direction |
+| `Esc` | Back / close detail view |
+| `q` | Quit PortPulse |
+
+---
+
 ## 🏗️ Architecture
 
 ```
@@ -214,84 +238,34 @@ portpulse status                     # Check eBPF & system status
 
 ---
 
-## 📁 Project Structure
-
-```
-portpulse/
-├── Cargo.toml                  # Workspace root
-├── crates/
-│   ├── core/                   # Core library
-│   │   └── src/
-│   │       ├── models.rs       # Data types (Connection, Process, RiskScore)
-│   │       ├── event.rs        # Event pipeline & broadcast bus
-│   │       ├── aggregator.rs   # Event correlation & state management
-│   │       ├── classifier.rs   # Risk scoring engine
-│   │       ├── policy.rs       # Policy rules & violation detection
-│   │       ├── export.rs       # JSON/CSV export
-│   │       ├── process.rs      # /proc process scanner
-│   │       └── dns.rs          # DNS cache & reverse lookups
-│   ├── ebpf/                   # eBPF layer
-│   │   └── src/
-│   │       ├── probes.rs       # Probe definitions (kprobes, tracepoints)
-│   │       ├── loader.rs       # Aya-based eBPF loader
-│   │       ├── reader.rs       # Perf buffer event reader
-│   │       └── fallback.rs     # /proc/net/* polling fallback
-│   ├── tui/                    # Terminal UI
-│   │   └── src/
-│   │       ├── app.rs          # Application state & input handling
-│   │       ├── ui.rs           # Main layout renderer
-│   │       ├── theme.rs        # Dark color system
-│   │       └── widgets/        # UI components
-│   │           ├── connections_table.rs
-│   │           ├── suspicious_lane.rs
-│   │           ├── dns_log.rs
-│   │           ├── process_tree.rs
-│   │           └── connection_graph.rs  # ⚡ Animated graph
-│   └── cli/                    # CLI binary
-│       └── src/
-│           ├── main.rs         # Clap argument parser
-│           └── commands/       # Subcommand handlers
-│               ├── live.rs     # TUI dashboard
-│               ├── trace.rs    # Process tracing
-│               ├── explain.rs  # Port explanation
-│               ├── quarantine.rs # Domain quarantine
-│               ├── export.rs   # Data export
-│               └── status.rs   # System status
-├── docs/                       # Documentation
-├── scripts/                    # Build & install scripts
-└── examples/                   # Usage examples
-```
-
----
-
 ## 🎯 Use Cases
 
 ### 🔐 Incident Response
-> "Something is phoning home from this server — what process, what domain, when did it start?"
+> *"Something is phoning home from this server — what process, what domain, when did it start?"*
 
 ```bash
 sudo portpulse live --threshold 0.3
 ```
 
 ### 🐳 Container Debugging
-> "Which container is making unexpected network calls?"
+> *"Which container is making unexpected network calls?"*
 
 PortPulse detects Docker/containerd containers automatically via cgroup analysis.
 
 ### 🛡️ Security Audit
-> "Show me all connections to non-standard ports by root processes."
+> *"Show me all connections to non-standard ports by root processes."*
 
 Use the filter (`/`) and sort (`s`) in the TUI to drill down instantly.
 
 ### 📊 Compliance Reporting
-> "Export all network activity for audit review."
+> *"Export all network activity for audit review."*
 
 ```bash
 portpulse export --format csv --what all -o audit-report.csv
 ```
 
 ### 🐛 Dev Debugging
-> "Why is my app connecting to this IP? What DNS resolution led there?"
+> *"Why is my app connecting to this IP? What DNS resolution led there?"*
 
 ```bash
 portpulse trace --pid $(pgrep myapp) --children
@@ -300,55 +274,15 @@ portpulse explain 8080
 
 ---
 
-## 🗺️ Roadmap
-
-### v0.1 — MVP (Current)
-- [x] Live connection monitoring
-- [x] DNS query capture
-- [x] Risk scoring engine
-- [x] Animated connection graph
-- [x] CLI commands (live, trace, explain, quarantine, export)
-- [x] /proc fallback when eBPF unavailable
-
-### v0.2 — Enhanced eBPF
-- [ ] Full Aya eBPF program compilation
-- [ ] TLS SNI detection
-- [ ] TCP retransmission tracking
-- [ ] Packet size histograms
-
-### v0.3 — Intelligence
-- [ ] Domain reputation API integration
-- [ ] WHOIS enrichment
-- [ ] GeoIP mapping
-- [ ] Threat feed integration
-
-### v0.4 — Kubernetes
-- [ ] Pod-level network visibility
-- [ ] Service mesh awareness
-- [ ] NetworkPolicy suggestion
-- [ ] Helm chart
-
-### v1.0 — Production
-- [ ] Daemon mode with gRPC API
-- [ ] Web dashboard (optional)
-- [ ] Plugin system
-- [ ] Alert integrations (Slack, PagerDuty)
-
----
-
 ## 📦 Installation
 
 ### From Source (Recommended)
 ```bash
 git clone https://github.com/the-shadow-0/PortPulse.git
-cd portpulse
+cd PortPulse
 cargo install --path crates/cli
 ```
 
-### One-Line Install
-```bash
-curl -sSf https://raw.githubusercontent.com/the-shadow-0/PortPulse/main/scripts/install.sh | sh
-```
 
 ### Package Managers (Coming Soon)
 ```bash
@@ -368,6 +302,8 @@ sudo dpkg -i portpulse_0.1.0_amd64.deb
 
 We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
+Please read our [Code of Conduct](CODE_OF_CONDUCT.md) before participating.
+
 ### Good First Issues
 - Add more port descriptions to the `explain` command
 - Add IPv6 support to the connection graph
@@ -384,13 +320,24 @@ We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
 ---
 
-## 🔐 Security Model
+## 🔐 Security
 
 - **Local-first**: All data stays on your machine. No telemetry, no phone-home.
 - **Read-only eBPF**: Probes are strictly observational — they cannot modify kernel state.
 - **No payload capture**: PortPulse captures metadata (IPs, ports, PIDs) — never packet contents.
 - **Privilege separation**: eBPF requires root; the TUI can run unprivileged with /proc fallback.
 - **Audit logging**: Every policy violation is logged with timestamps and evidence.
+
+For vulnerability reporting, see [SECURITY.md](SECURITY.md).
+
+---
+
+## 💬 Community
+
+- 🐛 [Report a Bug](https://github.com/the-shadow-0/PortPulse/issues/new?template=bug_report.yml)
+- 💡 [Request a Feature](https://github.com/the-shadow-0/PortPulse/issues/new?template=feature_request.yml)
+- 💬 [Join Discussions](https://github.com/the-shadow-0/PortPulse/discussions)
+- ⭐ [Star on GitHub](https://github.com/the-shadow-0/PortPulse) — it helps a lot!
 
 ---
 
@@ -403,6 +350,8 @@ MIT License — see [LICENSE](LICENSE) for details.
 <div align="center">
 
 **⚡ Built with Rust, eBPF, and ❤️ for the open-source community.**
+
+If PortPulse helped you, consider giving it a ⭐ — it means the world to us!
 
 [⬆ Back to top](#-portpulse)
 
