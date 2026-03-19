@@ -9,7 +9,7 @@ resolver = "2"
 
 [workspace.package]
 version = "0.1.0"
-edition = "2026"
+edition = "2021"
 authors = ["Noureddine BENMANSER"]
 license = "MIT"
 repository = "https://github.com/the-shadow-0/PortPulse"
