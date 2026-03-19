@@ -283,6 +283,10 @@ cd PortPulse
 cargo install --path crates/cli
 ```
 
+### One-Line Install
+```bash
+curl -sSf https://raw.githubusercontent.com/the-shadow-0/PortPulse/main/scripts/install.sh | bash
+```
 
 ### Package Managers (Coming Soon)
 ```bash

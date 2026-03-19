@@ -77,7 +77,7 @@ We take security seriously. If you discover a vulnerability in PortPulse, **plea
 
 ### ✅ Do
 
-1. **Email**: Send a detailed report to **security@portpulse.dev** (or open a [GitHub Security Advisory](https://github.com/the-shadow-0/PortPulse/security/advisories/new))
+1. **Github Security**: open a [GitHub Security Advisory](https://github.com/the-shadow-0/PortPulse/security/advisories/new)
 2. **Include**:
    - Description of the vulnerability
    - Steps to reproduce
