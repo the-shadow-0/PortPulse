@@ -8,11 +8,11 @@ members = [
 resolver = "2"
 
 [workspace.package]
-version = "0.1.0"
-edition = "2021"
-authors = ["PortPulse Contributors"]
+version = "0.1"
+edition = "2026"
+authors = ["Noureddine BENMANSER"]
 license = "MIT"
-repository = "https://github.com/portpulse/portpulse"
+repository = "https://github.com/the-shadow-0/PortPulse"
 description = "See every Linux process, port, connection, and DNS lookup live in one interactive map"
 keywords = ["network", "monitoring", "ebpf", "tui", "security"]
 categories = ["command-line-utilities", "network-programming"]
