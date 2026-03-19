@@ -52,10 +52,7 @@ pub fn render(frame: &mut Frame, app: &App, area: Rect) {
         .flat_map(|conn| {
             let risk_style = Theme::risk_style(conn.risk.level);
             let addr_string = conn.remote_addr.to_string();
-            let target = conn
-                .remote_hostname
-                .as_deref()
-                .unwrap_or(&addr_string);
+            let target = conn.remote_hostname.as_deref().unwrap_or(&addr_string);
             let label = format!(
                 "{}→{}:{} ({:.2})",
                 conn.process.name, target, conn.remote_port, conn.risk.score

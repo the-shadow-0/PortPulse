@@ -31,13 +31,9 @@ pub fn render(frame: &mut Frame, app: &App, area: Rect) {
             Theme::title(),
         ));
 
-    let header_cells = [
-        "PID", "Process", "Proto", "Remote", "Port", "State", "Risk",
-    ]
-    .iter()
-    .map(|h| {
-        Cell::from(*h).style(Theme::header())
-    });
+    let header_cells = ["PID", "Process", "Proto", "Remote", "Port", "State", "Risk"]
+        .iter()
+        .map(|h| Cell::from(*h).style(Theme::header()));
     let header = Row::new(header_cells).height(1);
 
     let rows: Vec<Row> = filtered
@@ -69,8 +65,7 @@ pub fn render(frame: &mut Frame, app: &App, area: Rect) {
             Row::new(vec![
                 Cell::from(conn.process.pid.to_string()),
                 Cell::from(conn.process.name.clone()),
-                Cell::from(conn.protocol.to_string())
-                    .style(Style::default().fg(proto_color)),
+                Cell::from(conn.protocol.to_string()).style(Style::default().fg(proto_color)),
                 Cell::from(remote_truncated),
                 Cell::from(conn.remote_port.to_string()),
                 Cell::from(conn.state.to_string()),

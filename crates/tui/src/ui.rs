@@ -29,17 +29,14 @@ pub fn render(frame: &mut Frame, app: &App) {
     let size = frame.area();
 
     // Clear background
-    frame.render_widget(
-        Block::default().style(Theme::base()),
-        size,
-    );
+    frame.render_widget(Block::default().style(Theme::base()), size);
 
     // Main vertical layout
     let chunks = Layout::default()
         .direction(Direction::Vertical)
         .constraints([
-            Constraint::Length(3),  // Tab bar
-            Constraint::Length(3),  // Suspicious lane
+            Constraint::Length(3), // Tab bar
+            Constraint::Length(3), // Suspicious lane
             Constraint::Min(10),   // Main content
             Constraint::Length(1), // Status bar
         ])
@@ -165,8 +162,7 @@ fn render_detail(frame: &mut Frame, app: &App, area: Rect) {
                 .borders(Borders::ALL)
                 .border_style(Theme::border(false))
                 .title(Span::styled(" 🔍 Detail ", Theme::title()));
-            let msg = Paragraph::new("No connection selected. Press ESC to go back.")
-                .block(block);
+            let msg = Paragraph::new("No connection selected. Press ESC to go back.").block(block);
             frame.render_widget(msg, area);
             return;
         }
@@ -257,10 +253,7 @@ fn render_detail(frame: &mut Frame, app: &App, area: Rect) {
     all_lines.push(Line::from(vec![
         Span::styled("  Traffic:    ", Style::default().fg(Theme::MUTED)),
         Span::styled(
-            format!(
-                "↑ {} bytes  ↓ {} bytes",
-                conn.bytes_sent, conn.bytes_recv
-            ),
+            format!("↑ {} bytes  ↓ {} bytes", conn.bytes_sent, conn.bytes_recv),
             Style::default().fg(Theme::FG),
         ),
     ]));

@@ -123,11 +123,7 @@ fn render_tree_node<'a>(
         n => format!("{} conns", n),
     };
 
-    let risk_color = if count > 3 {
-        Theme::MEDIUM
-    } else {
-        Theme::FG
-    };
+    let risk_color = if count > 3 { Theme::MEDIUM } else { Theme::FG };
 
     lines.push(Line::from(vec![
         Span::styled(format!("  {}{}", prefix, connector), Theme::muted()),

@@ -1,5 +1,5 @@
-use portpulse_core::models::*;
 use portpulse_core::event::Event;
+use portpulse_core::models::*;
 use std::collections::VecDeque;
 
 /// Active panel/tab in the TUI
@@ -309,16 +309,14 @@ impl App {
                 .unwrap_or_else(|| conn.remote_addr.to_string());
             let angle_dom = (i as f64 * 0.7) % std::f64::consts::TAU;
 
-            domain_nodes
-                .entry(domain_key.clone())
-                .or_insert(GraphNode {
-                    id: format!("dom:{}", domain_key),
-                    label: domain_key.clone(),
-                    node_type: GraphNodeType::Domain,
-                    x: 70.0 + 15.0 * angle_dom.cos(),
-                    y: 50.0 + 30.0 * angle_dom.sin(),
-                    risk: conn.risk.level,
-                });
+            domain_nodes.entry(domain_key.clone()).or_insert(GraphNode {
+                id: format!("dom:{}", domain_key),
+                label: domain_key.clone(),
+                node_type: GraphNodeType::Domain,
+                x: 70.0 + 15.0 * angle_dom.cos(),
+                y: 50.0 + 30.0 * angle_dom.sin(),
+                risk: conn.risk.level,
+            });
 
             self.graph_edges.push(GraphEdge {
                 from: proc_key,
@@ -329,10 +327,8 @@ impl App {
             });
         }
 
-        self.graph_nodes
-            .extend(process_nodes.into_values());
-        self.graph_nodes
-            .extend(domain_nodes.into_values());
+        self.graph_nodes.extend(process_nodes.into_values());
+        self.graph_nodes.extend(domain_nodes.into_values());
     }
 }
 

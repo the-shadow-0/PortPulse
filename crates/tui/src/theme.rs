@@ -1,5 +1,5 @@
-use ratatui::style::{Color, Modifier, Style};
 use portpulse_core::models::RiskLevel;
+use ratatui::style::{Color, Modifier, Style};
 
 /// PortPulse color theme — a carefully crafted dark theme
 /// optimized for terminal readability and visual hierarchy.
@@ -117,9 +117,7 @@ impl Theme {
     }
 
     pub fn status_bar() -> Style {
-        Style::default()
-            .fg(Self::FG)
-            .bg(Color::Rgb(22, 27, 34))
+        Style::default().fg(Self::FG).bg(Color::Rgb(22, 27, 34))
     }
 
     pub fn suspicious_lane() -> Style {

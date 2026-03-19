@@ -63,10 +63,7 @@ pub fn render(frame: &mut Frame, app: &App, area: Rect) {
                 .unwrap_or_default();
 
             let risk_indicator = if query.risk.score > 0.3 {
-                Span::styled(
-                    format!(" {}", query.risk.level),
-                    risk_style,
-                )
+                Span::styled(format!(" {}", query.risk.level), risk_style)
             } else {
                 Span::raw("")
             };

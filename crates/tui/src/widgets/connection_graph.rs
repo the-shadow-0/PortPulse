@@ -1,12 +1,12 @@
 use crate::app::{App, GraphNodeType};
 use crate::theme::Theme;
+use portpulse_core::models::RiskLevel;
 use ratatui::layout::Rect;
 use ratatui::style::{Modifier, Style};
 use ratatui::text::{Line, Span};
 use ratatui::widgets::canvas::{Canvas, Circle, Line as CanvasLine};
 use ratatui::widgets::{Block, Borders};
 use ratatui::Frame;
-use portpulse_core::models::RiskLevel;
 
 /// Render the animated connection graph — the WOW feature.
 ///
@@ -152,31 +152,22 @@ pub fn render(frame: &mut Frame, app: &App, area: Rect) {
                 ctx.print(
                     mid_x,
                     mid_y,
-                    Line::from(Span::styled(
-                        edge.label.clone(),
-                        Style::default().fg(color),
-                    )),
+                    Line::from(Span::styled(edge.label.clone(), Style::default().fg(color))),
                 );
             }
 
             // Draw nodes
             for node in &node_data {
                 let color = match node.node_type {
-                    GraphNodeType::Process => {
-                        ratatui::style::Color::Rgb(88, 166, 255)
-                    }
+                    GraphNodeType::Process => ratatui::style::Color::Rgb(88, 166, 255),
                     GraphNodeType::Domain => match node.risk {
                         RiskLevel::High | RiskLevel::Critical => {
                             ratatui::style::Color::Rgb(248, 81, 73)
                         }
-                        RiskLevel::Medium => {
-                            ratatui::style::Color::Rgb(210, 153, 34)
-                        }
+                        RiskLevel::Medium => ratatui::style::Color::Rgb(210, 153, 34),
                         _ => ratatui::style::Color::Rgb(163, 113, 247),
                     },
-                    GraphNodeType::IpAddress => {
-                        ratatui::style::Color::Rgb(139, 148, 158)
-                    }
+                    GraphNodeType::IpAddress => ratatui::style::Color::Rgb(139, 148, 158),
                 };
 
                 // Draw node marker
@@ -188,9 +179,7 @@ pub fn render(frame: &mut Frame, app: &App, area: Rect) {
                 });
 
                 // Draw label
-                let label_style = Style::default()
-                    .fg(color)
-                    .add_modifier(Modifier::BOLD);
+                let label_style = Style::default().fg(color).add_modifier(Modifier::BOLD);
 
                 ctx.print(
                     node.x,
@@ -204,12 +193,24 @@ pub fn render(frame: &mut Frame, app: &App, area: Rect) {
                 2.0,
                 97.0,
                 Line::from(vec![
-                    Span::styled("● ", Style::default().fg(ratatui::style::Color::Rgb(88, 166, 255))),
+                    Span::styled(
+                        "● ",
+                        Style::default().fg(ratatui::style::Color::Rgb(88, 166, 255)),
+                    ),
                     Span::styled("Process  ", Theme::muted()),
-                    Span::styled("◆ ", Style::default().fg(ratatui::style::Color::Rgb(163, 113, 247))),
+                    Span::styled(
+                        "◆ ",
+                        Style::default().fg(ratatui::style::Color::Rgb(163, 113, 247)),
+                    ),
                     Span::styled("Domain  ", Theme::muted()),
-                    Span::styled("━━ ", Style::default().fg(ratatui::style::Color::Rgb(248, 81, 73))),
-                    Span::styled("Suspicious", Style::default().fg(ratatui::style::Color::Rgb(248, 81, 73))),
+                    Span::styled(
+                        "━━ ",
+                        Style::default().fg(ratatui::style::Color::Rgb(248, 81, 73)),
+                    ),
+                    Span::styled(
+                        "Suspicious",
+                        Style::default().fg(ratatui::style::Color::Rgb(248, 81, 73)),
+                    ),
                 ]),
             );
         });
